@@ -1,9 +1,11 @@
 name: Publish Java Package
 
-on:
-  push:
-    tags:
-      - 'jpo-ode-*'
+# on:
+#   push:
+#     tags:
+#       - 'jpo-ode-*'
+on: [pull_request, push]
+
 
 jobs:
   build:
@@ -23,7 +25,7 @@ jobs:
       run: mvn versions:set -DremoveSnapshot
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml -DskipTests
+      run: mvn -B package --file pom.xml
 
     - name: Publish to GitHub Packages
       run: mvn --batch-mode -Dgithub_organization=${{ github.repository_owner }} deploy
